@@ -23,22 +23,25 @@ def CrowdMeter():
     return my_date,people
 
 # Defining Function to Record Crowd Data
-def MeterRecorder(interval, duration):
+def MeterRecorder(interval, readings):
+
+    # Time and Number of people Variables
     done = False
     counter = 0
     dates = []
     datapoints = []
+
+    # Loop Over specified interval for a specified number of readings
     while done == False:
         date, datapoint = CrowdMeter()
         datapoints.append(datapoint)
         dates.append(date)
         time.sleep(interval)
         counter += 1
-        if counter > (duration - 1):
+        if counter > (readings - 1):
             done = True
-    print(dates)
-    print(datapoints)
 
+    # Generation of Graph
     plt.style.use('seaborn-white')
     plt.xlabel('Time')
     plt.ylabel('People at the Gym')
@@ -46,5 +49,5 @@ def MeterRecorder(interval, duration):
     plt.plot(dates, datapoints)
     plt.savefig('CrowdMeterGraph.png')
 
-
+# Run(interval, readings)
 MeterRecorder(5, 3)
