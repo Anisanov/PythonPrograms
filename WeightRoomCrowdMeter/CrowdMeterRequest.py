@@ -2,7 +2,7 @@
 import requests
 from datetime import datetime
 import time
-import matplotlib.pyplot as plt
+import csv
 
 # Defining CrowdMeter function
 def CrowdMeter():
@@ -28,26 +28,27 @@ def MeterRecorder(interval, readings):
     # Time and Number of people Variables
     done = False
     counter = 0
-    dates = []
-    datapoints = []
 
-    # Loop Over specified interval for a specified number of readings
-    while done == False:
-        date, datapoint = CrowdMeter()
-        datapoints.append(datapoint)
-        dates.append(date)
-        time.sleep(interval)
-        counter += 1
-        if counter > (readings - 1):
-            done = True
 
-    # Generation of Graph
-    plt.style.use('seaborn-white')
-    plt.xlabel('Time')
-    plt.ylabel('People at the Gym')
-    plt.title('People at UCB Gym vs Time')
-    plt.plot(dates, datapoints)
-    plt.savefig('CrowdMeterGraph.png')
+    # Opening CSV file in write mode
+    file = open('CrowdData.csv', 'w', newline = '')
+
+    # Writing to CSV
+    with file:
+
+        # Loop Over specified interval for a specified number of readings and recording data
+        while done == False:
+            date, datapoint = CrowdMeter()
+            file.write(str(date))
+            file.write(',')
+            file.write(str(datapoint))
+            file.write(',')
+            time.sleep(interval)
+            counter += 1
+            if counter > (readings - 1):
+                done = True
+
+
 
 # Run(interval, readings)
-MeterRecorder(5, 3)
+MeterRecorder(1, 60)
