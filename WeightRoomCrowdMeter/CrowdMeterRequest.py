@@ -51,4 +51,4 @@ def MeterRecorder(interval, readings):
 
 
 # Run(interval, readings)
-MeterRecorder(1, 60)
+MeterRecorder(900, 96)
