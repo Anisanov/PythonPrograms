@@ -82,5 +82,10 @@ for (i, j) in zip(ii, jj):
     sampleVols.append(sampleVol)
     PBSVols.append(PBSVol)
 output = pd.DataFrame(list(zip(labels, sampleVols, PBSVols)), columns=['Sample', 'uL of Sample', 'uL of PBS'])
+
+# Averaging duplicate samples
+output = output.groupby('Sample').mean().reset_index()
 output = output.set_index('Sample')
+
+# Displaying Output
 print(output)
